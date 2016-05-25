@@ -29,10 +29,8 @@ def setup_keys():
         with open(keyFile, 'r') as f:
             keys = json.load(f)
     except ValueError:
-        click.echo("File exists but is empty")
         keys = {}
     except IOError:
-        click.echo("File does not exist")
         open(keyFile, 'w').close()
         keys = {}
 
