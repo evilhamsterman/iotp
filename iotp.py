@@ -10,6 +10,7 @@ from appdirs import AppDirs
 # Set app information
 appname = 'iotp'
 appauthor = 'Dan Mills'
+appversion = '0.0.1'
 
 # Setup appdirs
 dirs = AppDirs(appname, appauthor)
@@ -56,6 +57,7 @@ def get_totp(key):
 
 
 @click.group()
+@click.version_option(appversion)
 def cli():
     pass
 
