@@ -4,7 +4,7 @@ import os
 import pyotp
 import json
 import base64
-# import click
+import click
 from appdirs import AppDirs
 
 # Set app information
@@ -57,6 +57,13 @@ def get_totp(key):
         return None
 
 
+@click.group()
+def cli():
+    pass
+
+
+@cli.command()
+@click.argument('service', required=False)
 def get(service=None):
     """
     Gets TOTP codes for service specified. If no service is specified it
@@ -77,6 +84,9 @@ def get(service=None):
         print('{} does not exist'.format(service))
 
 
+@cli.command()
+@click.argument('service')
+@click.argument('key')
 def set(service, key):
     """Accepts a service and a key and saves it out to the keyFile"""
     keys = setup_keys()
@@ -89,6 +99,8 @@ def set(service, key):
         save_keys(keys)
 
 
+@cli.command()
+@click.argument('service')
 def rm(service):
     """Accepts a service and removes it from the list of services"""
     keys = setup_keys()
@@ -97,3 +109,7 @@ def rm(service):
         save_keys(keys)
     else:
         print('{} does not exist'.format(service))
+
+
+if __name__ == '__main__':
+    cli()
