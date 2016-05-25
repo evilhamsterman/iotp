@@ -29,10 +29,10 @@ def setup_keys():
         with open(keyFile, 'r') as f:
             keys = json.load(f)
     except ValueError:
-        print("File exists but is empty")
+        click.echo("File exists but is empty")
         keys = {}
     except IOError:
-        print("File does not exist")
+        click.echo("File does not exist")
         open(keyFile, 'w').close()
         keys = {}
 
@@ -74,14 +74,14 @@ def get(service=None):
         for service, value in keys.iteritems():
             totp = get_totp(value)
             if totp:
-                print('{}: {}'.format(service, totp))
+                click.echo('{}: {}'.format(service, totp))
 
     elif service in keys:
         totp = get_totp(keys[service])
         if totp:
-            print('{}: {}'.format(service, totp))
+            click.echo('{}: {}'.format(service, totp))
     else:
-        print('{} does not exist'.format(service))
+        click.echo('{} does not exist'.format(service))
 
 
 @cli.command()
@@ -93,7 +93,7 @@ def set(service, key):
     try:
         base64.b32decode(key)
     except TypeError:
-        print('{} is not a valid key'.format(key))
+        click.echo('{} is not a valid key'.format(key))
     else:
         keys[service] = key
         save_keys(keys)
@@ -105,10 +105,10 @@ def rm(service):
     """Accepts a service and removes it from the list of services"""
     keys = setup_keys()
     if keys.pop(service, None):
-        print('Removed {}'.format(service))
+        click.echo('Removed {}'.format(service))
         save_keys(keys)
     else:
-        print('{} does not exist'.format(service))
+        click.echo('{} does not exist'.format(service))
 
 
 if __name__ == '__main__':
