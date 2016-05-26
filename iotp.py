@@ -88,6 +88,8 @@ def get(copy, service=None):
             click.echo('{}: {}'.format(service, totp))
             if copy:
                 pyperclip.copy(totp)
+        else:
+            click.echo('Key is invalid, please reset key')
     else:
         click.echo('{} does not exist'.format(service))
 
