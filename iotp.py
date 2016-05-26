@@ -63,16 +63,20 @@ def get_totp(key):
 @click.group()
 @click.version_option(appversion)
 def cli():
+    """
+    iotp is a Google Authenicator/RFC 6238 compatible application for
+    generating Time based One Time Passwords
+    """
     pass
 
 
 @cli.command()
 @click.argument('service', required=False)
-@click.option('--copy', '-c', is_flag=True)
+@click.option('--copy', '-c', is_flag=True, help="Copy TOTP to the clipboard")
 def get(copy, service=None):
     """
     Gets TOTP codes for service specified. If no service is specified it
-    it prints codes for all services
+    prints codes for all services
     """
     keys = setup_keys()
     if not service:
@@ -94,11 +98,11 @@ def get(copy, service=None):
         click.echo('{} does not exist'.format(service))
 
 
-@cli.command()
+@cli.command(help="Sets the service key")
 @click.argument('service')
 @click.argument('key')
 def set(service, key):
-    """Accepts a service and a key and saves it out to the keyFile"""
+    """Accepts a service and a key and saves it out to the keyFile."""
     keys = setup_keys()
     try:
         base64.b32decode(key)
@@ -109,10 +113,10 @@ def set(service, key):
         save_keys(keys)
 
 
-@cli.command()
+@cli.command(help="Removes the specified service")
 @click.argument('service')
 def rm(service):
-    """Accepts a service and removes it from the list of services"""
+    """Accepts a service and removes it from the list of services."""
     keys = setup_keys()
     if keys.pop(service, None):
         click.echo('Removed {}'.format(service))
