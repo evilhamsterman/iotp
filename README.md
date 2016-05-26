@@ -9,7 +9,7 @@ A small app for generating TOTP (Google Authenicator/RFC 6238 compatible) codes.
 ### Add or modify a service
 `iotp set <Service name> <Base32 Key>`
 
-For example
+For example:
 
 `iotp Slack SQUE5WUI3XJQ4T7E`
 
@@ -21,8 +21,21 @@ For a all registered services
 
 For a specific service
 
-`iotp get Slack`
+`iotp get [-c] <service>`
+
+Using `-c` will copy the code to the clipboard. This requires installing the `xclip` app on Linux/\*BSD, Windows and Mac have not extra requirements.
+
+For example:
+
+`iotp get -c Slack`
+
+then Ctrl-v into your authentication dialog
+
 
 ### Remove a service
+
+`iotp rm <service>`
+
+For example
 
 `iotp rm Slack`
