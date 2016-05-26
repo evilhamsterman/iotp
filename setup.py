@@ -8,7 +8,8 @@ setup(
     py_modules=['iotp'],
     install_requires=[
         'click',
-        'pyotp'
+        'pyotp',
+        'appdirs'
     ],
     entry_points={
         'console_scripts': [
