@@ -1,11 +1,14 @@
 #!/usr/bin/env python
 
-import os
-import pyotp
-import json
+# Import system libraries
 import base64
-import click
+import json
+import os
+
+# Import PyPi libraries
 from appdirs import AppDirs
+import click
+import pyotp
 
 # Set app information
 appname = 'iotp'
