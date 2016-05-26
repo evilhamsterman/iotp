@@ -71,7 +71,8 @@ def get(service=None):
     """
     keys = setup_keys()
     if not service:
-        for service, value in keys.iteritems():
+        for service in keys:
+            value = keys[service]
             totp = get_totp(value)
             if totp:
                 click.echo('{}: {}'.format(service, totp))
