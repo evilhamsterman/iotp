@@ -9,6 +9,7 @@ import os
 from appdirs import AppDirs
 import click
 import pyotp
+import pyperclip
 
 # Set app information
 appname = 'iotp'
@@ -67,7 +68,8 @@ def cli():
 
 @cli.command()
 @click.argument('service', required=False)
-def get(service=None):
+@click.option('--copy', '-c', is_flag=True)
+def get(copy, service=None):
     """
     Gets TOTP codes for service specified. If no service is specified it
     it prints codes for all services
@@ -84,6 +86,8 @@ def get(service=None):
         totp = get_totp(keys[service])
         if totp:
             click.echo('{}: {}'.format(service, totp))
+            if copy:
+                pyperclip.copy(totp)
     else:
         click.echo('{} does not exist'.format(service))
 
