@@ -100,32 +100,40 @@ def cli():
 @cli.command()
 @click.argument('service', required=False)
 @click.option('--copy', '-c', is_flag=True, help="Copy TOTP to the clipboard")
-def get(copy, service=None):
+@click.option('--repeat', '-r', default=1, help="Repeat TOTP after countdown")
+@click.option('--count/--no-count', ' /-C', default=True, help="Display seconds remaining")
+def get(copy, repeat, count, service=None):
     """
     Gets TOTP codes for service specified. If no service is specified it
     prints codes for all services
     """
-    keyTime = datetime.now()
     keys = setup_keys()
-    if not service:
-        for service in keys:
-            value = keys[service]
-            totp = get_totp(value, keyTime)
+    while repeat:
+        keyTime = datetime.now()
+        if not service:
+            for service in keys:
+                value = keys[service]
+                totp = get_totp(value, keyTime)
+                if totp:
+                    click.echo('{}: {}'.format(service, totp))
+                    if count:
+                        display_remaining(keyTime)
+
+        elif service in keys:
+            totp = get_totp(keys[service], keyTime)
             if totp:
                 click.echo('{}: {}'.format(service, totp))
+                if copy:
+                    pyperclip.copy(totp)
+            else:
+                click.echo('Key is invalid, please reset key')
+            if count:
                 display_remaining(keyTime)
-
-    elif service in keys:
-        totp = get_totp(keys[service], keyTime)
-        if totp:
-            click.echo('{}: {}'.format(service, totp))
-            if copy:
-                pyperclip.copy(totp)
         else:
-            click.echo('Key is invalid, please reset key')
-        display_remaining(keyTime)
-    else:
-        click.echo('{} does not exist'.format(service))
+            click.echo('{} does not exist'.format(service))
+            break
+        time.sleep(0.5)
+        repeat-=1
 
 
 @cli.command(help="Sets the service key")
