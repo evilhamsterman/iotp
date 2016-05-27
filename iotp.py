@@ -4,6 +4,8 @@
 import base64
 import json
 import os
+import time
+from datetime import datetime
 
 # Import PyPi libraries
 from appdirs import AppDirs
@@ -48,16 +50,41 @@ def save_keys(keys):
         json.dump(keys, f, indent=True)
 
 
-def get_totp(key):
+def get_totp(key, keyTime):
     """
     Accepts a BASE32 encoded key and returns the TOTP if it is valid and None
     if it is invalid
     """
     try:
         totp = pyotp.TOTP(key)
-        return totp.now()
+        return totp.at(keyTime)
     except TypeError:
         return None
+
+
+def display_remaining(keyTime):
+    """
+    Displays a progress bar with the time remaining till the next 30 second
+    """
+    r = range(30, 0, -1)
+
+    # Seconds remaining in block
+    if keyTime.second > 30:
+        secRemain = 30 - (keyTime.second - 30)
+    else:
+        secRemain = 30 - keyTime.second
+
+    with click.progressbar(r,
+                           label='Seconds Remaining',
+                           width=30,
+                           show_percent=False,
+                           show_eta=False,
+                           item_show_func=str) as bar:
+        for i in bar:
+            # Only wait a second if the countdown is less than the Seconds
+            # remaining
+            if i <= secRemain:
+                time.sleep(1)
 
 
 @click.group()
@@ -78,22 +105,25 @@ def get(copy, service=None):
     Gets TOTP codes for service specified. If no service is specified it
     prints codes for all services
     """
+    keyTime = datetime.now()
     keys = setup_keys()
     if not service:
         for service in keys:
             value = keys[service]
-            totp = get_totp(value)
+            totp = get_totp(value, keyTime)
             if totp:
                 click.echo('{}: {}'.format(service, totp))
+                display_remaining(keyTime)
 
     elif service in keys:
-        totp = get_totp(keys[service])
+        totp = get_totp(keys[service], keyTime)
         if totp:
             click.echo('{}: {}'.format(service, totp))
             if copy:
                 pyperclip.copy(totp)
         else:
             click.echo('Key is invalid, please reset key')
+        display_remaining(keyTime)
     else:
         click.echo('{} does not exist'.format(service))
 
