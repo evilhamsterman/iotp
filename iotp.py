@@ -109,6 +109,8 @@ def get(copy, repeat, count, service=None):
     """
     keys = setup_keys()
     while repeat:
+        if len(keys) == 0:
+            break
         keyTime = datetime.now()
         if not service:
             for service in keys:
