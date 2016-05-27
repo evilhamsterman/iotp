@@ -116,6 +116,8 @@ def get(copy, repeat, count, service=None):
                 totp = get_totp(value, keyTime)
                 if totp:
                     click.echo('{}: {}'.format(service, totp))
+                    if copy and len(keys) == 1:
+                        pyperclip.copy(totp)
             if count:
                 display_remaining(keyTime)
 
