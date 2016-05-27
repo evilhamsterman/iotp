@@ -16,7 +16,7 @@ import pyperclip
 # Set app information
 appname = 'iotp'
 appauthor = 'Dan Mills'
-appversion = '1.0.0'
+appversion = '1.0.1'
 
 # Setup appdirs
 dirs = AppDirs(appname, appauthor)
@@ -110,6 +110,7 @@ def get(copy, repeat, count, service=None):
     keys = setup_keys()
     while repeat:
         if len(keys) == 0:
+            click.echo('No keys. Use iotp set to add one')
             break
         keyTime = datetime.now()
         if not service:
