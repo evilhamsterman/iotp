@@ -17,13 +17,16 @@ For example:
 
 For a all registered services
 
-`iotp get`
+`iotp get [-cCr]`
 
 For a specific service
 
-`iotp get [-c] <service>`
+`iotp get [-cCr] <service>`
 
-Using `-c` will copy the code to the clipboard. This requires installing the `xclip` app on Linux/\*BSD, Windows and Mac have not extra requirements.
+By default a countdown bar will display the remaining seconds the TOTP is valid.
+* `-c` will copy the code to the clipboard. This requires installing the `xclip` app on Linux/\*BSD, Windows and Mac have no extra requirements.
+* `-C` will prevent the countdown from displaying.
+* `-r` will repeat the TOTP after the countdown is over for the number specified.
 
 For example:
 
