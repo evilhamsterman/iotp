@@ -116,8 +116,8 @@ def get(copy, repeat, count, service=None):
                 totp = get_totp(value, keyTime)
                 if totp:
                     click.echo('{}: {}'.format(service, totp))
-                    if count:
-                        display_remaining(keyTime)
+            if count:
+                display_remaining(keyTime)
 
         elif service in keys:
             totp = get_totp(keys[service], keyTime)
