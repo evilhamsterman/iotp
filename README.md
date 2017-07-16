@@ -9,9 +9,16 @@ A small app for generating TOTP (Google Authenicator/RFC 6238 compatible) codes.
 ### Add or modify a service
 `iotp set <Service name> <Base32 Key>`
 
+Keys with spaces must be entered in quotes
+
 For example:
 
-`iotp set Slack SQUE5WUI3XJQ4T7E`
+`iotp set Slack "SQUE 5WUI 3XJQ 4T7E"`
+
+or
+
+`iotp set Slack "SQUE5WUI3XJQ4T7E"`
+
 
 ### Retrieve a TOTP
 
