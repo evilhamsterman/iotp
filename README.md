@@ -11,7 +11,7 @@ A small app for generating TOTP (Google Authenicator/RFC 6238 compatible) codes.
 
 For example:
 
-`iotp Slack SQUE5WUI3XJQ4T7E`
+`iotp set Slack SQUE5WUI3XJQ4T7E`
 
 ### Retrieve a TOTP
 
