@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 # Import system libraries
+import re
 import base64
 import json
 import os
@@ -147,6 +148,9 @@ def get(copy, repeat, count, service=None):
 def set(service, key):
     """Accepts a service and a key and saves it out to the keyFile."""
     keys = setup_keys()
+    # convert Google Authenticator style space-separated lower-case to upper
+    # case without spaces
+    key = re.sub('\s','',key.upper())
     try:
         base64.b32decode(key)
     except TypeError:
