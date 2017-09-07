@@ -5,6 +5,7 @@ setup(
     author='Dan Mills',
     version='1.0.2',
     license='Apache 2.0',
+    url='https://github.com/evilhamsterman/iotp'
     classifiers=[
         'License :: OSI Approved :: Apache Software License',
         'Programming Language :: Python :: 2.7',
