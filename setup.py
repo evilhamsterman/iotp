@@ -3,7 +3,7 @@ from setuptools import setup
 setup(
     name='iotp',
     author='Dan Mills',
-    version='1.0.2',
+    version='1.0.2.1',
     license='Apache 2.0',
     url='https://github.com/evilhamsterman/iotp',
     classifiers=[
