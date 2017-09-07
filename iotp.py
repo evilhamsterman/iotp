@@ -17,7 +17,7 @@ import pyperclip
 # Set app information
 appname = 'iotp'
 appauthor = 'Dan Mills'
-appversion = '1.0.1'
+appversion = '1.0.2'
 
 # Setup appdirs
 dirs = AppDirs(appname, appauthor)
