@@ -1,3 +1,6 @@
+> [!WARNING]
+> This app is unmaintained and not secure. I wrote it to prove a point. If you need a CLI TOTP user something like oathtool or totp-cli
+
 # iotp
 A small app for generating TOTP (Google Authenicator/RFC 6238 compatible) codes.
 
